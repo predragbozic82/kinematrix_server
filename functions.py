@@ -1,9 +1,19 @@
 import pygsheets
 from datetime import datetime
+import os
+import json
 
 # === INIT GSheet ===
-def init_gsheet(service_file_path, sheet_url):
-    gc = pygsheets.authorize(service_file=service_file_path)
+def init_gsheet(service_info_or_path, sheet_url):
+    """
+    Ako je service_info_or_path dict, koristi ga direktno.
+    Ako je string (putanja), učita fajl sa diska.
+    """
+    if isinstance(service_info_or_path, dict):
+        gc = pygsheets.authorize(service_account_info=service_info_or_path)
+    else:
+        gc = pygsheets.authorize(service_file=service_info_or_path)
+    
     sh = gc.open_by_url(sheet_url)
     input_wks = sh.worksheet_by_title('DATABASE')
     output_wks = sh.worksheet_by_title('PRIPREMA')
@@ -63,5 +73,3 @@ def upisi_DY(output_wks, DN_niz, cetvrta_vrednost_grupa_2):
 
 def upisi_SLC_tekst_u_DZ(output_wks, DN_niz, treca_vrednost_grupa_3):
     pass
-
-
