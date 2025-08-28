@@ -1,13 +1,23 @@
 from flask import Flask, request, jsonify
 from datetime import datetime
 from functions import *
+import os
+import json
 
 app = Flask(__name__)
 
-SERVICE_FILE = "client_secret_zavod.json"
+# Google Sheet URL
 SHEET_URL = "https://docs.google.com/spreadsheets/d/1zSM2URKs4gylIT-uz2NS3B_t3EJ4bVc84LtC1hd9Q1E"
 
-gc, sh, input_wks, output_wks, status_wks = init_gsheet(SERVICE_FILE, SHEET_URL)
+# Učitavanje servisnog JSON-a iz environment variable
+SERVICE_JSON = os.environ.get("GSHEET_SERVICE_JSON")
+if not SERVICE_JSON:
+    raise ValueError("GSHEET_SERVICE_JSON environment variable nije postavljen!")
+
+service_info = json.loads(SERVICE_JSON)
+
+# Inicijalizacija Google Sheet konekcije
+gc, sh, input_wks, output_wks, status_wks = init_gsheet(service_info, SHEET_URL)
 
 @app.route("/process", methods=["POST"])
 def process():
