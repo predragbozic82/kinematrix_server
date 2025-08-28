@@ -1,4 +1,4 @@
-pandas==2.0.3
 Flask==2.3.2
 pygsheets==2.0.6
+
 
