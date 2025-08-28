@@ -6,19 +6,19 @@ import json
 
 app = Flask(__name__)
 
-# Google Sheet URL
+# --- GSheets setup ---
 SHEET_URL = "https://docs.google.com/spreadsheets/d/1zSM2URKs4gylIT-uz2NS3B_t3EJ4bVc84LtC1hd9Q1E"
 
-# Učitavanje servisnog JSON-a iz environment variable
-SERVICE_JSON = os.environ.get("GSHEET_SERVICE_JSON")
-if not SERVICE_JSON:
-    raise ValueError("GSHEET_SERVICE_JSON environment variable nije postavljen!")
+# Učitaj JSON iz environment variable
+service_json_str = os.environ.get("GSHEET_SERVICE_JSON")
+if not service_json_str:
+    raise Exception("Environment variable GSHEET_SERVICE_JSON nije postavljena!")
 
-service_info = json.loads(SERVICE_JSON)
+service_json = json.loads(service_json_str)
 
-# Inicijalizacija Google Sheet konekcije
-gc, sh, input_wks, output_wks, status_wks = init_gsheet(service_info, SHEET_URL)
+gc, sh, input_wks, output_wks, status_wks = init_gsheet(service_json, SHEET_URL)
 
+# --- Flask route ---
 @app.route("/process", methods=["POST"])
 def process():
     try:
