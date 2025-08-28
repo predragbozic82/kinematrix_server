@@ -1,19 +1,9 @@
 import pygsheets
 from datetime import datetime
-import os
-import json
 
 # === INIT GSheet ===
 def init_gsheet(service_info_or_path, sheet_url):
-    """
-    Ako je service_info_or_path dict, koristi ga direktno.
-    Ako je string (putanja), učita fajl sa diska.
-    """
-    if isinstance(service_info_or_path, dict):
-        gc = pygsheets.authorize(service_account_info=service_info_or_path)
-    else:
-        gc = pygsheets.authorize(service_file=service_info_or_path)
-    
+    gc = pygsheets.authorize(service_account_info=service_info_or_path)
     sh = gc.open_by_url(sheet_url)
     input_wks = sh.worksheet_by_title('DATABASE')
     output_wks = sh.worksheet_by_title('PRIPREMA')
@@ -25,24 +15,19 @@ def ocisti_pripremu(output_wks):
     output_wks.clear()
 
 # === FUNKCIJE OBRADA ===
-
 def main_filtriranje(gc, input_wks, output_wks):
-    # Tvoja obrada podataka iz input_wks
     row = []                 # placeholder
     split_values = []        # placeholder
     signal_link = ""         # placeholder
     return row, split_values, signal_link
 
 def obradi_i_upisi_grupe(input_wks, output_wks, n):
-    # Placeholder - vrati vrednosti
     return 1, 2, 3, 4
 
 def ucitaj_i_splituj_vrednosti(input_wks, n):
-    # Placeholder
     return [1,2,3], [4,5,6]
 
 def obradi_i_upisi_signale(row, output_wks, splitovane, gc):
-    # Placeholder
     values_DG = [1,2,3]
     values_DH = [4,5,6]
     integral_DQ = 0
@@ -50,7 +35,6 @@ def obradi_i_upisi_signale(row, output_wks, splitovane, gc):
     return values_DG, values_DH, integral_DQ, rezultat_dm26
 
 def izracunaj_i_upisi_DN_i_DO(output_wks, values_DG, values_DH, poslednjih_8, rezultat_dm26):
-    # Placeholder
     return [1,2,3]
 
 def upisi_DR_DS_i_DT(output_wks, values_DH, DN_niz):
