@@ -1,5 +1,4 @@
 import pygsheets
-import pandas as pd
 from datetime import datetime
 
 # === INIT GSheet ===
@@ -64,4 +63,5 @@ def upisi_DY(output_wks, DN_niz, cetvrta_vrednost_grupa_2):
 
 def upisi_SLC_tekst_u_DZ(output_wks, DN_niz, treca_vrednost_grupa_3):
     pass
+
 
